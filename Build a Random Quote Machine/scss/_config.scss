@@ -1,0 +1,17 @@
+$primary-color: #272727;
+$secondary-color: #A52A2A;
+$clr-blkPrim: #000;
+$clr-bluPrim: #34568B;
+$clr-redPrim: #A52A2A;
+$clr-LbluPrim: #45567d;
+$clr-DgrayPrim: #A9A9A9;
+$clr-slmonPrim: #E9967A;
+$clr-gWhtePrim: #F8F8FF;
+
+@function set-text-color ($color) {
+    @if (lightness($color) > 40%) {
+        @return #000;
+    } @else {
+        @return #F8F8FF;
+    }
+}
