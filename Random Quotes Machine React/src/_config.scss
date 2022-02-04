@@ -28,3 +28,9 @@ $font-calc: calc(10px + 2vmin);
     height: auto;
     width: auto;
 }
+@mixin media-sm {
+    @media screen and (max-width: 768px){
+        @content;
+    }
+    
+}
