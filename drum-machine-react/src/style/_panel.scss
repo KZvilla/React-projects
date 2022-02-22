@@ -1,0 +1,15 @@
+.container{
+    &__panel {
+        text-align: center;
+        &--resetButton,&--powerButton {
+            border-radius: 2px;
+            border: solid $clr-bluPrim 2px;
+            font-weight: 400;
+            transition: ease all 0.4s;
+        &:hover {
+            background-color: $clr-gWhtePrim;
+            color: $clr-redPrim;
+        }
+        }
+    }
+}

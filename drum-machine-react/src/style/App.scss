@@ -1,0 +1,28 @@
+@import 'config','keyboard','panel';
+body {
+    background-color: $primary-color;
+}
+.App {
+    margin: auto;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+.container {
+    background-color: $clr-gWhtePrim;
+    border: solid 2px black;
+    border-radius: 2px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@include media-sm {
+    .container{
+        flex-direction: column;
+    }
+}
