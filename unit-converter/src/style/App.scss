@@ -1,0 +1,35 @@
+@import 'config';
+.App-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  &__title{
+    display: block;
+    background-color: aquamarine;
+  }
+  &__conversor{
+    background-color: red;
+    padding: 1em;
+    border-radius: 5px;
+    label{
+      background-color: antiquewhite;
+      padding: 0.25em;
+    }
+    .inPut{
+      margin-left: 0.25em;
+      border: solid black 1px;
+      border-radius: 5px;
+    }
+    .outPut{
+      margin-left: 0.25em;
+      border: solid black 1px;
+      border-radius: 5px;
+    }
+  }
+  &__selector{
+    display:flex;
+    flex-direction: row;
+  }
+}
