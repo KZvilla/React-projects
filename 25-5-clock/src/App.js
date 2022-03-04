@@ -1,8 +1,7 @@
-import {Fragment, useEffect, useState} from 'react';
+import {Fragment, useEffect, useState, useRef} from 'react';
 import styled  from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown,faArrowUp,faPlay,faPause,faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
-import sound from './breakSound.wav';
 
 const ClockZone = styled.div`
   position: absolute;
@@ -40,8 +39,9 @@ const ClockZone = styled.div`
     background-color: #34568B;
     grid-area: 3 / 1 / 4 / 3;
     display: grid;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     &__number {
@@ -101,16 +101,54 @@ const Button = styled(BreakSessionControls)`
   }
 }
 `;
-function SelectorType({title, changeTime, type, time, formatTime}) {
+
+const SessionType = styled.h3`
+   grid-area: 3 / 1 / 4 / 3;
+      text-align:center;
+      background-color: #34568B;
+      color: #F8F8FF;
+`;
+const SessionTitle  = function sessionTitle({onBreak}) {
+  return( 
+    <SessionType id={'timer-label'} className='display__sessionTitle'>{onBreak ? "Break" : "Session"}</SessionType>
+    )};
+
+    const audioSource = "https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav";
+    function SelectorType({title, changeTime, type, time, formatTime, idIncrement ,idDecrement}) {
+  const handleIdDown = (t) => {
+    if(t ==='break') {
+      return 'break-decrement'
+    } return 'session-decrement'
+  };
+  const handleIdUp = (t) => {
+    if(t ==='break') {
+      return 'break-increment'
+    } return 'session-increment'
+  };
+  const handleTitle = (t) =>{
+    if(t ==='break') {
+      return 'break-length'
+    } return 'session-length'
+  };
+  const handleTime = (t)=>{
+    if(t ==='break') {
+      return time / 60;
+    } return time / 60;
+  };
   return (
     <BreakSessionControls>
       <Text>{title}</Text>
       <div className='time-sets'> 
-        <Button onClick={() => changeTime(-60, type)}>
+        <Button 
+        onClick={() => changeTime(-60, type)} 
+        id={handleIdDown(type)}>
           <FontAwesomeIcon icon={faArrowDown} className={'arrow-down'} />
         </Button>
-        <Text>{formatTime(time)}</Text>
-        <Button  onClick={() => changeTime(60, type)}>
+        <Text id={handleTitle(type)}>{handleTime(type)}</Text>
+        <Button  
+        onClick={() => changeTime(60, type)}
+        id={handleIdUp(type)}
+        >
           <FontAwesomeIcon icon={faArrowUp} className={'arrow-up'} />
         </Button>
       </div>
@@ -118,15 +156,14 @@ function SelectorType({title, changeTime, type, time, formatTime}) {
   );
 }
 
-
 export function App() {
-  const [time, setTime] = useState(5);
-  const [breakTime, setBreakTime] = useState(3);
-  const [sessionTime, setsessionTime] = useState(5);
+  const [time, setTime] = useState(25*60);
+  const [breakTime, setBreakTime] = useState(5*60);
+  const [sessionTime, setsessionTime] = useState(25*60);
   const [timerOn, setTimerOn] = useState(false);
   const [onBreak, setOnBreak] = useState(false);
-  const [breakAudio, setBreakAudio] = useState( new Audio(sound));
   
+  let myAudio = useRef(null);
   useEffect(() => {
     if (time <= 0) {
       setOnBreak(true);
@@ -136,24 +173,29 @@ export function App() {
   }, [time, onBreak, timerOn, breakTime, sessionTime,]);
 
   const playSound = () => {
-    breakAudio.currentTime = 0;
-    breakAudio.play();
+    myAudio.current.currentTime = 0;
+    myAudio.current.play();
   }
-
   const toTimeFormat = (t) => {
-    let minutes = Math.round(t/60);
+    let minutes = Math.floor(t/60);
     let seconds = t % 60;
     return (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
   };
   const changeTime = (n, type) =>{
-    if (type ==='break' && breakTime > 0){
+    if (type ==='break'){
+      if((breakTime <= 60 && n < 0) || breakTime >= 60 * 60) {
+        return;
+    }
       setBreakTime((p)=>p+n);
-    } else if (type ==='session' && sessionTime > 0){
+    } else {
+      if ((sessionTime <= 60 && n < 0) || sessionTime >= 60 * 60){
+        return;
+      }
       setsessionTime((p)=>p+n);
       if (!timerOn){
         setTime(sessionTime + n);
       }
-    } else singleReset(type);
+    }
   };
   const controlClock = () => {
     let second = 1000;
@@ -192,32 +234,39 @@ export function App() {
 
 
   const globalReset = () =>{
+    clearInterval(localStorage.getItem("interval-id"));
     setTime(25*60);
     setBreakTime(5*60);
     setsessionTime(25*60);
+    myAudio.current.pause();
+    myAudio.current.currentTime = 0;
+    setTimerOn(false);
+    setOnBreak(false);
   }
-  const singleReset = (type) =>{
-    if (type === 'break') {
-      setBreakTime(5*60);
-    } else {
-      setsessionTime(25*60);
-      setTime(25*60);
-    }
-  }
+  // const singleReset = (type) =>{
+  //   if (type === 'break') {
+  //     setBreakTime(5*60);
+  //   } else {
+  //     setsessionTime(25*60);
+  //     setTime(25*60);
+  //   }
+  // }
   return (
     <Fragment>
       <ClockZone className='noselect'>
         <h1 className='title'>25+5 Clock</h1>
-        <div className={'break'}>
-          <SelectorType title={'Break Lenght'} 
+        <div className={'break'} id={"break-label"}>
+          <SelectorType 
+          title={'Break Length'} 
           changeTime={changeTime} 
           type={'break'} 
           time={breakTime} 
-          formatTime={toTimeFormat} 
+          formatTime={toTimeFormat}
         />
         </div>
-        <div className={'session'}>
-          <SelectorType title={'Session Lenght'} 
+        <div className={'session'} id={"session-label"}>
+          <SelectorType 
+          title={'Session Length'} 
           changeTime={changeTime} 
           type={'session'} 
           time={sessionTime} 
@@ -225,16 +274,19 @@ export function App() {
         />
         </div>
         <div className='display'>
-          <h3>{onBreak ? "Break" : "Session"}</h3>
-          <h1 className='display__number'>{toTimeFormat(time)}</h1>
-          <button className={'display__pausePlay'} onClick={controlClock} >
+          <SessionTitle 
+          className={'display__sessionTitle'} 
+          onBreak={onBreak}/>
+          <h1 id={'time-left'} className='display__number'>{toTimeFormat(time)}</h1>
+          <button id={'start_stop'} className={'display__pausePlay'} onClick={controlClock} >
           {!timerOn ? (<FontAwesomeIcon icon={faPlay} className={'display__pausePlay'} />
           ) : (<FontAwesomeIcon icon={faPause} className={'display__pausePlay'} />)}
           </button>
-          <button  className={'display__reload'} onClick={globalReset}>
+          <button id={"reset"} className={'display__reload'} onClick={globalReset}>
           <FontAwesomeIcon icon={faArrowRotateRight} className={'display__reload'} />
           </button>
         </div>
+        <audio ref={myAudio} src={audioSource} id="beep" />
       </ClockZone>
     </Fragment>
   );
