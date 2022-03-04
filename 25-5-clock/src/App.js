@@ -242,15 +242,7 @@ export function App() {
     myAudio.current.currentTime = 0;
     setTimerOn(false);
     setOnBreak(false);
-  }
-  // const singleReset = (type) =>{
-  //   if (type === 'break') {
-  //     setBreakTime(5*60);
-  //   } else {
-  //     setsessionTime(25*60);
-  //     setTime(25*60);
-  //   }
-  // }
+  };
   return (
     <Fragment>
       <ClockZone className='noselect'>
