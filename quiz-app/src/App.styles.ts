@@ -79,7 +79,6 @@ export const Wrapper = styled.div`
       #f7bb97 51%,
       #dd5e89 100%
     );
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0, 255);
     border: #dd5e89;
     border-radius: 10px;
     height: 40px;
@@ -129,9 +128,21 @@ export const Wrapper = styled.div`
     letter-spacing: 0.5rem;
     border-radius: 0 10px 10px 0px;
     &:hover {
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.25);
       margin: 8px 10px 12px;
       border: #f8f8ff solid 2px;
+    }
+  }
+  @media (max-width: 768px) {
+    .question {
+      position: relative;
+      left: -22px;
+      width: 368px;
+    }
+    h1{
+      display: inline-block;
+      font-size: calc(35px + 2vmin);
+      width: 100%;
     }
   }
 `;

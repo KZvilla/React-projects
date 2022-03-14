@@ -6,8 +6,11 @@ export const Wrapper = styled.div`
     border-radius: 10px;
     border: 2px solid #F8F8FF;
     padding: 20px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0, 255);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 255);
     text-align: center;
+    @media (max-width: 768px) {
+      max-width: 368px;
+}
 `;
 
 type ButtonWrapperProp = {
@@ -39,8 +42,10 @@ export const ButtonWrapper = styled.div<ButtonWrapperProp>`
       ${({ correct, userClicked }) =>
         (correct ? "#9eb25d" : !correct && userClicked ? "#A52A2A" : "#F8F8FF")};
     border-radius: 5px;
-    box-shadow: 1px 250px 0px rgba(0, 0, 0, 0, 0.1);
     color: #272727;
-    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0, 0.25);
+    text-shadow: 0px 1px 0px rgba( 0, 0, 0, 0.25);
   }
+  @media (min-width: 768px) {
+
+}
 `;
