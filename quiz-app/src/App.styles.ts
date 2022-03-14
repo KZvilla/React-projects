@@ -50,6 +50,7 @@ export const Wrapper = styled.div`
     width: 700px;
     padding: 0.875rem;
     color: #272727;
+    font-size: calc(10px + 2vmin);
   }
   .score {
     user-select: none;

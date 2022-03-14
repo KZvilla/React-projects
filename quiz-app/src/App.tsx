@@ -87,7 +87,7 @@ export function App() {
     <Fragment>
       <GlobalStyle />
       <Wrapper>
-        <h1>React/Typescript QUIZ</h1>
+        <h1>React/TypeScript QUIZ</h1>
         {gameOver ? (
           <>
             <button className="start easy" onClick={startTriviaEasy}>
