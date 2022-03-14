@@ -88,7 +88,7 @@ export function App() {
       <GlobalStyle />
       <Wrapper>
         <h1>React/Typescript QUIZ</h1>
-        {gameOver || userAnswers.length === TOTAL_QUESTION ? (
+        {gameOver ? (
           <>
             <button className="start easy" onClick={startTriviaEasy}>
               EASY
