@@ -1,5 +1,5 @@
 //React toys
-import { Fragment, MouseEvent, useState } from "react";
+import {Fragment, MouseEvent, useState } from "react";
 //Components
 import { QuestionCard } from "./components/QuestionCards";
 //Data Fetch
@@ -10,6 +10,8 @@ import { AnswerObject, QuestionState,Difficulty } from "./components/types";
 import { GlobalStyle, Wrapper } from "./App.styles";
 
 const TOTAL_QUESTION = 10;
+
+
 export function App() {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
@@ -18,42 +20,59 @@ export function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  const startTriviaEasy = async () => {
-    setLoading(true);
-    setGameOver(false);
+const startTrivia = (e: MouseEvent) =>{
+  const value = (e.target as HTMLInputElement).value; // De esta forma le aclaramos al copilador de que e no es undefined
+  switch (value) {
+    case 'EASY':
+      const run1 = async () => {
+        setLoading(true);
+        setGameOver(false);
+    
+        const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.EASY);
+        console.log(newQuestion);
+        setQuestions(newQuestion);
+        setScore(0);
+        setUserAnswers([]);
+        setNumber(0);
+        setLoading(false);
+      };
+      run1()
+      break;
+    case 'MEDIUM':
+      const run2 = async () => {
+        setLoading(true);
+        setGameOver(false);
+    
+        const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.MEDIUM);
+        console.log(newQuestion);
+        setQuestions(newQuestion);
+        setScore(0);
+        setUserAnswers([]);
+        setNumber(0);
+        setLoading(false);
+      };
+      run2()
+      break;
+  
+    default:
+      const run3 = async () => {
+        setLoading(true);
+        setGameOver(false);
+    
+        const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.HARD);
+        console.log(newQuestion);
+        setQuestions(newQuestion);
+        setScore(0);
+        setUserAnswers([]);
+        setNumber(0);
+        setLoading(false);
+      };
+      run3()
+      break;
+  }
+  
 
-    const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.EASY);
-    console.log(newQuestion);
-    setQuestions(newQuestion);
-    setScore(0);
-    setUserAnswers([]);
-    setNumber(0);
-    setLoading(false);
-  };
-  const startTriviaMedium = async () => {
-    setLoading(true);
-    setGameOver(false);
-
-    const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.MEDIUM);
-    console.log(newQuestion);
-    setQuestions(newQuestion);
-    setScore(0);
-    setUserAnswers([]);
-    setNumber(0);
-    setLoading(false);
-  };
-  const startTriviaHard = async () => {
-    setLoading(true);
-    setGameOver(false);
-
-    const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.HARD);
-    console.log(newQuestion);
-    setQuestions(newQuestion);
-    setScore(0);
-    setUserAnswers([]);
-    setNumber(0);
-    setLoading(false);
-  };
+}
   const checkAnswers = (e: MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       //Users answers
@@ -90,13 +109,13 @@ export function App() {
         <h1>React/TypeScript QUIZ</h1>
         {gameOver ? (
           <>
-            <button className="start easy" onClick={startTriviaEasy}>
+            <button value={'EASY'} className="start easy" onClick={startTrivia}>
               EASY
             </button>
-            <button className="start medium" onClick={startTriviaMedium}>
+            <button value={'MEDIUM'} className="start medium" onClick={startTrivia}>
               MEDIUM
             </button>
-            <button className="start hard" onClick={startTriviaHard}>
+            <button  value={'HARD'} className="start hard" onClick={startTrivia}>
               HARD
             </button>
           </>
