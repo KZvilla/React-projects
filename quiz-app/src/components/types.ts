@@ -7,7 +7,7 @@ export type AnswerObject = {
     correct: boolean;
     correctAnswer: string;
   };
-//Components Types
+//Components(props) Types
  export type TypesProps = {
     question: string;
     answers: string[];
