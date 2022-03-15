@@ -1,13 +1,13 @@
 //React toys
 import { MouseEvent } from "react";
-
+//Main App Types
 export type AnswerObject = {
     question: string;
     answer: string;
     correct: boolean;
     correctAnswer: string;
   };
-
+//Components Types
  export type TypesProps = {
     question: string;
     answers: string[];
@@ -16,7 +16,7 @@ export type AnswerObject = {
     questionNumber: number;
     totalQuestion: number;
 }
-
+//Data Fetch Types
 export type Question = {
     category: string;
     correct_answer: string;
@@ -24,9 +24,13 @@ export type Question = {
     incorrect_answers: string[];
     question: string;
     type: string;
+    answers: string[]
 }
-//Extends the Question Type Alias
-export type QuestionState = Question & {answers: string[]}
+//Styles Types
+export type ButtonWrapperProp = {
+    correct: boolean;
+    userClicked: boolean;
+}
 
 //Set constants
 export enum Difficulty {
