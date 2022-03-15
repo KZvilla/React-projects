@@ -5,7 +5,7 @@ import { QuestionCard } from "./components/QuestionCards";
 //Data Fetch
 import { fetchQuestions } from "./API";
 //Types
-import { AnswerObject,Difficulty, Question } from "./components/types";
+import { AnswerObject, Difficulty, Question } from "./components/types";
 //Styles
 import { GlobalStyle, Wrapper } from "./App.styles";
 
