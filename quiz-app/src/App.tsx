@@ -5,7 +5,7 @@ import { QuestionCard } from "./components/QuestionCards";
 //Data Fetch
 import { fetchQuestions } from "./API";
 //Types
-import { AnswerObject, QuestionState,Difficulty } from "./components/types";
+import { AnswerObject,Difficulty, Question } from "./components/types";
 //Styles
 import { GlobalStyle, Wrapper } from "./App.styles";
 
@@ -14,60 +14,57 @@ const TOTAL_QUESTION = 10;
 
 export function App() {
   const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState<QuestionState[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [number, setNumber] = useState(0);
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-const startTrivia = (e: MouseEvent) =>{
-  const value = (e.target as HTMLInputElement).value; // De esta forma le aclaramos al copilador de que e no es undefined
+const startTrivia = (e: MouseEvent<HTMLButtonElement>) =>{
+  const value = e.currentTarget.value; // Otra forma seria (e.target as HTMLInputElement).value; asi le aclaramos al copilador de que e no es undefined
   switch (value) {
     case 'EASY':
-      const run1 = async () => {
+      const easy = async () => {
         setLoading(true);
         setGameOver(false);
     
         const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.EASY);
-        console.log(newQuestion);
         setQuestions(newQuestion);
         setScore(0);
         setUserAnswers([]);
         setNumber(0);
         setLoading(false);
       };
-      run1()
+      easy()
       break;
     case 'MEDIUM':
-      const run2 = async () => {
+      const medium = async () => {
         setLoading(true);
         setGameOver(false);
     
         const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.MEDIUM);
-        console.log(newQuestion);
         setQuestions(newQuestion);
         setScore(0);
         setUserAnswers([]);
         setNumber(0);
         setLoading(false);
       };
-      run2()
+      medium()
       break;
   
     default:
-      const run3 = async () => {
+      const hard = async () => {
         setLoading(true);
         setGameOver(false);
     
         const newQuestion = await fetchQuestions(TOTAL_QUESTION, Difficulty.HARD);
-        console.log(newQuestion);
         setQuestions(newQuestion);
         setScore(0);
         setUserAnswers([]);
         setNumber(0);
         setLoading(false);
       };
-      run3()
+      hard()
       break;
   }
   
