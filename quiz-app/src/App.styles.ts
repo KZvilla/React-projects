@@ -78,7 +78,7 @@ export const Wrapper = styled.div`
     filter: drop-shadow(6px 6px 16px #272727);
     padding: 0 5px 0 5px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 255);
-    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25);
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 255);
     font-family: "Anton", sans-serif;
     color: #f8f8ff;
     user-select: none;
