@@ -1,3 +1,3 @@
 # React-projects
 
-Conjunto de diversos projectos, usando bootstrap, scss, react y typescript.
+Conjunto de diversos proyectos, usando bootstrap, scss, react y typescript.
